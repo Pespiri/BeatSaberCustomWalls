@@ -1,0 +1,5 @@
+﻿<vertical>
+  <page-button event-click='materialList#PageUp' direction='Up' />
+  <list id='materialList' expand-cell='true' select-cell='materialSelect' />
+  <page-button event-click='materialList#PageDown' direction='Down' />
+</vertical>
