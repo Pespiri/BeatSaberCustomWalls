@@ -17,37 +17,39 @@ public class CompileMaterialWindow : EditorWindow
 
     private void OnGUI()
     {
-        //string[] targets = TargetObjectEnumToStringArray();
-
         GUILayout.Label("Walls", EditorStyles.boldLabel);
         GUILayout.Space(20);
 
         foreach (MaterialDescriptor material in materials)
         {
-
             GUILayout.Label("GameObject: " + material.MaterialName, EditorStyles.boldLabel);
             material.AuthorName = EditorGUILayout.TextField("Author name", material.AuthorName);
             material.MaterialName = EditorGUILayout.TextField("Wall name", material.MaterialName);
             material.Description = EditorGUILayout.TextField("Wall description", material.Description);
-            //material.Description = EditorGUILayout.TextArea("Material description", GUILayout.Width(position.width - 7), GUILayout.Height(30));
-
-            //material.ApplicableTo[0] = (TargetObject)EditorGUILayout.MaskField("Supported materials", (int)material.ApplicableTo[0], targets);
-            //GUILayout.Label($"{(int)material.ApplicableTo[0]}", EditorStyles.boldLabel);
-
+            material.DisablesScore = EditorGUILayout.Toggle("Disables Score", material.DisablesScore);
             material.Icon = (Texture2D)EditorGUILayout.ObjectField("Cover Image", material.Icon, typeof(Texture2D), false);
 
-            EditorGUI.BeginDisabledGroup(material.transform.Find("Pixie") == null);
+            bool disableExportButton = false;
+            if (material.transform.Find("Pixie") == null
+                || string.IsNullOrWhiteSpace(material.AuthorName)
+                || string.IsNullOrWhiteSpace(material.MaterialName))
+            {
+                disableExportButton = true;
+            }
+
+            EditorGUI.BeginDisabledGroup(disableExportButton);
 
             if (GUILayout.Button("Export " + material.MaterialName))
             {
                 GameObject materialObject = material.gameObject;
-                if (materialObject != null && material != null)// && material.ApplicableTo[0] != 0)
+                if (materialObject != null && material != null)
                 {
                     string path = EditorUtility.SaveFilePanel("Save wall (pixie) file", "", material.MaterialName + ".pixie", "pixie");
 
                     if (!string.IsNullOrWhiteSpace(path))
                     {
-                        string fileName = Path.GetFileName(path);
+                        string guid = $"{{{GUID.Generate()}}}";
+                        string fileName = $"{Path.GetFileName(path)}_{guid}";
                         string folderPath = Path.GetDirectoryName(path);
 
                         Selection.activeObject = materialObject;
@@ -101,10 +103,15 @@ public class CompileMaterialWindow : EditorWindow
                 GUILayout.Label("Wall gameObject is missing", EditorStyles.boldLabel);
             }
 
-            //if (material.ApplicableTo[0] == 0)
-            //{
-            //    GUILayout.Label("Wall has to be applicable to something!", EditorStyles.boldLabel);
-            //}
+            if (string.IsNullOrWhiteSpace(material.AuthorName))
+            {
+                GUILayout.Label("Author name is empty", EditorStyles.boldLabel);
+            }
+
+            if (string.IsNullOrWhiteSpace(material.MaterialName))
+            {
+                GUILayout.Label("Wall name is empty", EditorStyles.boldLabel);
+            }
 
             GUILayout.Space(20);
         }
@@ -125,15 +132,4 @@ public class CompileMaterialWindow : EditorWindow
 
         return bounds;
     }
-
-    //private string[] TargetObjectEnumToStringArray()
-    //{
-    //    IList<string> array = new List<string>();
-    //    foreach (object singleEnum in Enum.GetValues(typeof(TargetObject)))
-    //    {
-    //        array.Add(singleEnum.ToString());
-    //    }
-
-    //    return array.ToArray();
-    //}
 }
