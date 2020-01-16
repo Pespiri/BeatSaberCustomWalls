@@ -1,10 +1,18 @@
 ﻿<vertical child-control-height='false'>
   <horizontal bg='panel-top' pad-left='10' pad-right='10' horizontal-fit='PreferredSize'>
-    <text text='Walls Description' align='Center' font-size='10' />
+    <text text='Wall Description' align='Center' font-size='10' />
   </horizontal>
   <horizontal pref-width='100' pref-height='45'>
     <text-page id='material-description' font-size='5.5' align='Center' />
   </horizontal>
   <bool-setting text='Wall frame' value='enable-obstacle-frame'
-                apply-on-change='true' />
+                apply-on-change='true'
+                font-size='4' />
+  <bool-setting text='Temporarily disable Score Submission' value='disable-score-submission'
+                apply-on-change='true' on-change='score-submission-manual-change'
+                font-size='4' />
+  <horizontal pref-width='100' pref-height='5'>
+    <text id='score-submission-info' color='#f22'
+          align='Center' font-size='5.5' />
+  </horizontal>
 </vertical>

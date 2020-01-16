@@ -26,8 +26,6 @@ namespace CustomWalls.Data
 
                     GameObject = AssetBundle.LoadAsset<GameObject>("Assets/_CustomMaterial.prefab");
                     Descriptor = GameObject.GetComponent<MaterialDescriptor>();
-                    Descriptor.Description = Utils.SafeUnescape(Descriptor.Description);
-
                     MaterialRenderer = MaterialUtils.GetGameObjectRenderer(GameObject, "pixie");
                 }
                 catch (Exception ex)
@@ -41,8 +39,10 @@ namespace CustomWalls.Data
                         AuthorName = fileName,
                         Description = $"File: '{fileName}'" +
                                     "\n\nThis file failed to load." +
-                                    "\n\nThis may be caused by you having duplicated files or that the custom wall is simply just broken." +
+                                    "\n\nThis may have been caused by having duplicated files," +
+                                    " another wall with the same name already exists or that the custom wall is simply just broken." +
                                     "\n\nThe best thing is probably just to delete it!",
+                        Icon = Utils.GetErrorIcon()
                     };
 
                     FileName = "DefaultMaterials";
@@ -55,6 +55,7 @@ namespace CustomWalls.Data
                     MaterialName = "Default",
                     AuthorName = "Beat Saber",
                     Description = "This is the default walls. (No preview available)",
+                    Icon = Utils.GetDefaultIcon()
                 };
             }
         }
@@ -70,7 +71,6 @@ namespace CustomWalls.Data
 
                     FileName = $@"internalResource\{name}";
                     Descriptor = GameObject.GetComponent<MaterialDescriptor>();
-                    Descriptor.Description = Utils.SafeUnescape(Descriptor.Description);
                     MaterialRenderer = MaterialUtils.GetGameObjectRenderer(GameObject, "pixie");
                 }
                 catch (Exception ex)
@@ -83,9 +83,11 @@ namespace CustomWalls.Data
                         MaterialName = "Internal Error (Report it!)",
                         AuthorName = $@"internalResource\{name}",
                         Description = $@"File: 'internalResource\\{name}'" +
-                                        "\n\nAn internal asset has failed to load." +
-                                        "\n\nThis shouldn't have happened and should be reported! Remember to include the log related to this incident." +
-                                        "\n\nDiscord: Pespiri#5919",
+                                    "\n\nAn internal asset has failed to load." +
+                                    "\n\nThis shouldn't have happened and should be reported!" +
+                                    " Remember to include the log related to this incident." +
+                                    "\n\nDiscord: Pespiri#5919",
+                        Icon = Utils.GetErrorIcon()
                     };
 
                     FileName = "DefaultMaterials";

@@ -1,4 +1,5 @@
-﻿using CustomWalls.HarmonyPatches;
+﻿using CustomWalls.Data;
+using CustomWalls.HarmonyPatches;
 using CustomWalls.Settings;
 using CustomWalls.Settings.UI;
 using CustomWalls.Utilities;
@@ -40,6 +41,17 @@ namespace CustomWalls
             if (nextScene.name == "GameCore")
             {
                 MaterialUtils.CurrentColorManager = Resources.FindObjectsOfTypeAll<ColorManager>().LastOrDefault();
+
+                CustomMaterial customMaterial = MaterialAssetLoader.CustomMaterialObjects[MaterialAssetLoader.SelectedMaterial];
+                if (customMaterial.Descriptor.DisablesScore
+                    || Configuration.UserDisabledScores)
+                {
+                    ScoreUtility.DisableScoreSubmission("Material");
+                }
+                else if (ScoreUtility.ScoreIsBlocked)
+                {
+                    ScoreUtility.EnableScoreSubmission("Material");
+                }
             }
         }
 
@@ -62,6 +74,7 @@ namespace CustomWalls
         private void Unload()
         {
             CustomMaterialsPatches.RemoveHarmonyPatches();
+            ScoreUtility.Cleanup();
             Configuration.Save();
         }
     }

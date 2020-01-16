@@ -35,6 +35,7 @@ namespace CustomWalls.Utilities
                         if (CustomMaterialObjects[i].FileName == Configuration.CurrentlySelectedMaterial)
                         {
                             SelectedMaterial = i;
+                            break;
                         }
                     }
                 }
@@ -50,7 +51,14 @@ namespace CustomWalls.Utilities
                 new CustomMaterial("DefaultMaterials"),
             };
 
-            IEnumerable<string> embeddedFiles = new List<string> { "PixelWalls.pixie", "PlainWalls.pixie", "MysticalSnowWalls.pixie" };
+            IEnumerable<string> embeddedFiles = new List<string>
+            {
+                "MysticalSnowWalls.pixie",
+                "PixelWalls.pixie",
+                "PlainWalls.pixie",
+                "TransparentWalls.pixie"
+            };
+
             foreach (string embeddedFile in embeddedFiles)
             {
                 CustomMaterial customMaterial = LoadEmbeddedMaterial(embeddedFile);
@@ -65,7 +73,7 @@ namespace CustomWalls.Utilities
                 try
                 {
                     CustomMaterial newMaterial = new CustomMaterial(customMaterialFile);
-                    if (newMaterial.AssetBundle != null)
+                    if (newMaterial != null)
                     {
                         customMaterials.Add(newMaterial);
                     }
@@ -86,7 +94,7 @@ namespace CustomWalls.Utilities
 
             try
             {
-                byte[] resource = Utils.LoadFromResource($"CustomWalls.Resources.{fileName}");
+                byte[] resource = Utils.LoadFromResource($"CustomWalls.Resources.Materials.{fileName}");
                 customMaterial = new CustomMaterial(resource, fileName);
             }
             catch (Exception ex)

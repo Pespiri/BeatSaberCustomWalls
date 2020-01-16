@@ -81,6 +81,10 @@
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
@@ -101,16 +105,20 @@
     <Compile Include="Settings\UI\MaterialListViewController.cs" />
     <Compile Include="Settings\UI\MaterialPreviewViewController.cs" />
     <Compile Include="Settings\UI\SettingsUI.cs" />
+    <Compile Include="Utilities\ScoreUtility.cs" />
     <Compile Include="Utilities\MaterialAssetLoader.cs" />
     <Compile Include="Utilities\MaterialUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
+    <EmbeddedResource Include="Resources\default.png" />
     <EmbeddedResource Include="Resources\description.md" />
-    <EmbeddedResource Include="Resources\MysticalSnowWalls.pixie" />
-    <EmbeddedResource Include="Resources\PixelWalls.pixie" />
-    <EmbeddedResource Include="Resources\PlainWalls.pixie" />
+    <EmbeddedResource Include="Resources\error.png" />
+    <EmbeddedResource Include="Resources\Materials\MysticalSnowWalls.pixie" />
+    <EmbeddedResource Include="Resources\Materials\PixelWalls.pixie" />
+    <EmbeddedResource Include="Resources\Materials\PlainWalls.pixie" />
+    <EmbeddedResource Include="Resources\Materials\TransparentWalls.pixie" />
     <EmbeddedResource Include="Settings\UI\Views\materialDetails.bsml" />
     <EmbeddedResource Include="Settings\UI\Views\materialList.bsml" />
     <EmbeddedResource Include="Settings\UI\Views\materialPreview.bsml" />

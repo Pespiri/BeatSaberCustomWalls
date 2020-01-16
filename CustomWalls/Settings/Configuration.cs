@@ -12,6 +12,8 @@ namespace CustomWalls.Settings
         public static string CurrentlySelectedMaterial { get; internal set; }
         public static bool EnableObstacleFrame { get; internal set; }
 
+        public static bool UserDisabledScores { get; internal set; }
+
         internal static void Init(IConfigProvider cfgProvider)
         {
             configProvider = cfgProvider;

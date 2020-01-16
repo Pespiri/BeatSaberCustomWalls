@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 namespace CustomWalls.Utilities
 {
@@ -22,12 +23,14 @@ namespace CustomWalls.Utilities
 
             foreach (string filter in filters)
             {
+                IEnumerable<string> directoryFiles = Directory.GetFiles(path, filter, searchOption);
+
                 if (returnShortPath)
                 {
-                    foreach (string directoryFile in Directory.GetFiles(path, filter, searchOption))
+                    foreach (string directoryFile in directoryFiles)
                     {
                         string filePath = directoryFile.Replace(path, "");
-                        if (filePath.StartsWith(@"\") && filePath.Length > 0)
+                        if (filePath.Length > 0 && filePath.StartsWith(@"\"))
                         {
                             filePath = filePath.Substring(1, filePath.Length - 1);
                         }
@@ -40,7 +43,7 @@ namespace CustomWalls.Utilities
                 }
                 else
                 {
-                    filePaths = filePaths.Union(Directory.GetFiles(path, filter, searchOption)).ToList();
+                    filePaths = filePaths.Union(directoryFiles).ToList();
                 }
             }
 
@@ -84,6 +87,52 @@ namespace CustomWalls.Utilities
                     return reader.ReadToEnd();
                 }
             }
+        }
+
+        private static Texture2D defaultIcon = null;
+        public static Texture2D GetDefaultIcon()
+        {
+            if (!defaultIcon)
+            {
+                try
+                {
+                    byte[] resource = LoadFromResource($"CustomWalls.Resources.default.png");
+                    defaultIcon = LoadTextureRaw(resource);
+                }
+                catch { }
+            }
+
+            return defaultIcon;
+        }
+
+        private static Texture2D errorIcon = null;
+        public static Texture2D GetErrorIcon()
+        {
+            if (!errorIcon)
+            {
+                byte[] resource = LoadFromResource($"CustomWalls.Resources.error.png");
+                errorIcon = LoadTextureRaw(resource);
+            }
+
+            return errorIcon;
+        }
+
+        /// <summary>
+        /// Loads an Texture2D from byte[]
+        /// </summary>
+        /// <param name="file"></param>
+        public static Texture2D LoadTextureRaw(byte[] file)
+        {
+            if (file.Length > 0)
+            {
+                Texture2D texture = new Texture2D(2, 2);
+                if (texture.LoadImage(file))
+                {
+                    return texture;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -147,9 +196,9 @@ namespace CustomWalls.Utilities
 
 #pragma warning disable CS0618 // IPA is obsolete
             // Check in old IPA
-            foreach (IPlugin p in PluginManager.Plugins)
+            foreach (IPlugin plugin in PluginManager.Plugins)
             {
-                if (p.Name == PluginName)
+                if (plugin.Name == PluginName)
                 {
                     return true;
                 }
