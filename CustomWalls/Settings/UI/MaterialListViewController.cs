@@ -35,6 +35,14 @@ namespace CustomWalls.Settings.UI
             GenerateMaterialPreview(row);
         }
 
+        [UIAction("reloadMaterials")]
+        public void ReloadMaterials()
+        {
+            MaterialAssetLoader.Reload();
+            SetupList();
+            Select(customListTableData.tableView, MaterialAssetLoader.SelectedMaterial);
+        }
+
         [UIAction("#post-parse")]
         public void SetupList()
         {
@@ -116,7 +124,7 @@ namespace CustomWalls.Settings.UI
                     materialObject.transform.localScale = new Vector3(10, 37.5f, 75); // new Vector3(5, 25, 50)
 
                     Renderer renderer = materialObject.gameObject?.GetComponentInChildren<Renderer>();
-                    MaterialUtils.SetRendererColor(renderer, colorManager.GetObstacleEffectColor());
+                    MaterialUtils.SetMaterialsColor(renderer?.materials, colorManager.GetObstacleEffectColor());
                 }
             }
         }

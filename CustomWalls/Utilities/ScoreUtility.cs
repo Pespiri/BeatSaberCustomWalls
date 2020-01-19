@@ -6,17 +6,16 @@ namespace CustomWalls.Utilities
     public class ScoreUtility
     {
         private static readonly IList<string> scoreBlockList = new List<string>();
-        private static readonly object acquireLock = new object();
 
         public static bool ScoreIsBlocked { get; private set; } = false;
 
-        internal static void DisableScoreSubmission(string BlockedBy)
+        internal static void DisableScoreSubmission(string reason)
         {
-            lock (acquireLock)
+            lock (scoreBlockList)
             {
-                if (!scoreBlockList.Contains(BlockedBy))
+                if (!scoreBlockList.Contains(reason))
                 {
-                    scoreBlockList.Add(BlockedBy);
+                    scoreBlockList.Add(reason);
                 }
 
                 if (!ScoreIsBlocked)
@@ -28,13 +27,13 @@ namespace CustomWalls.Utilities
             }
         }
 
-        internal static void EnableScoreSubmission(string BlockedBy)
+        internal static void EnableScoreSubmission(string reason)
         {
-            lock (acquireLock)
+            lock (scoreBlockList)
             {
-                if (scoreBlockList.Contains(BlockedBy))
+                if (scoreBlockList.Contains(reason))
                 {
-                    scoreBlockList.Remove(BlockedBy);
+                    scoreBlockList.Remove(reason);
                 }
 
                 if (ScoreIsBlocked && scoreBlockList.Count == 0)
@@ -51,7 +50,7 @@ namespace CustomWalls.Utilities
         /// </summary>
         internal static void Cleanup()
         {
-            lock (acquireLock)
+            lock (scoreBlockList)
             {
                 if (ScoreIsBlocked)
                 {

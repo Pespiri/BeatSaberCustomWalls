@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
+  "$schema": "https://raw.githubusercontent.com/beat-saber-modding-group/BSIPA-MetadataFileSchema/master/Schema.json",
   "author": "Pespiri",
   "description": [
     "#![CustomWalls.Resources.description.md]",
@@ -8,11 +8,11 @@
   "gameVersion": "1.6.2",
   "id": "CustomWalls",
   "name": "CustomWalls",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "dependsOn": {
     "BSIPA": "^3.13.4",
     "BeatSaberMarkupLanguage": "^1.1.0",
-    "BS Utils":  "^1.4.0"
+    "BS Utils": "^1.4.0"
   },
   "features": [],
   "links": {

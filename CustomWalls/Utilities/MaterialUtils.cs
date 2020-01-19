@@ -128,20 +128,20 @@ namespace CustomWalls.Utilities
         }
 
         /// <summary>
-        /// Set the renderers _Color field if it has it
+        /// Set the _Color field in every material if it has it
         /// </summary>
-        /// <param name="renderer">Renderer</param>
+        /// <param name="materials">Materials</param>
         /// <param name="color">Color</param>
-        public static void SetRendererColor(Renderer renderer, Color color)
+        public static void SetMaterialsColor(IEnumerable<Material> materials, Color color)
         {
-            if (renderer?.sharedMaterials != null)
+            if (materials != null)
             {
-                foreach (Material renderMaterial in renderer.sharedMaterials)
+                foreach (Material material in materials)
                 {
-                    if (renderMaterial != null
-                        && renderMaterial.HasProperty("_Color"))
+                    if (material != null
+                        && material.HasProperty("_Color"))
                     {
-                        renderMaterial.SetColor("_Color", color);
+                        material.SetColor("_Color", color);
                     }
                 }
             }

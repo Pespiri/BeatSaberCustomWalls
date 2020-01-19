@@ -98,5 +98,17 @@ namespace CustomWalls.Data
                 throw new ArgumentNullException("materialObject cannot be null for the constructor!");
             }
         }
+
+        public void Destroy()
+        {
+            if (AssetBundle != null)
+            {
+                AssetBundle.Unload(true);
+            }
+            else
+            {
+                UnityEngine.Object.Destroy(Descriptor);
+            }
+        }
     }
 }

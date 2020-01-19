@@ -1,5 +1,10 @@
-﻿<vertical>
-  <page-button event-click='materialList#PageUp' direction='Up' />
-  <list id='materialList' expand-cell='true' select-cell='materialSelect' />
-  <page-button event-click='materialList#PageDown' direction='Down' />
-</vertical>
+﻿<horizontal>
+  <vertical pad-left='50'>
+    <page-button event-click='materialList#PageUp' direction='Up' />
+    <list id='materialList' expand-cell='true' select-cell='materialSelect' />
+    <page-button event-click='materialList#PageDown' direction='Down' />
+  </vertical>
+  <vertical child-control-height='false'>
+    <button text='Reload all walls' on-click='reloadMaterials' />
+  </vertical>
+</horizontal>

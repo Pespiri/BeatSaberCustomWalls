@@ -93,7 +93,7 @@
   <ItemGroup>
     <Compile Include="Data\CustomMaterial.cs" />
     <Compile Include="Data\CustomMaterialExtensions\MaterialDescriptor.cs" />
-    <Compile Include="HarmonyPatches\HarmonyPatches.cs" />
+    <Compile Include="HarmonyPatches\CustomMaterialsPatches.cs" />
     <Compile Include="HarmonyPatches\Patches\WallPatch.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Plugin.cs" />
@@ -101,14 +101,14 @@
     <Compile Include="Settings\Configuration.cs" />
     <Compile Include="Settings\Utilities\PluginConfig.cs" />
     <Compile Include="Settings\UI\MaterialDetailsViewController.cs" />
-    <Compile Include="Settings\UI\MaterialsFlowCoordinator.cs" />
     <Compile Include="Settings\UI\MaterialListViewController.cs" />
     <Compile Include="Settings\UI\MaterialPreviewViewController.cs" />
+    <Compile Include="Settings\UI\MaterialsFlowCoordinator.cs" />
     <Compile Include="Settings\UI\SettingsUI.cs" />
-    <Compile Include="Utilities\ScoreUtility.cs" />
     <Compile Include="Utilities\MaterialAssetLoader.cs" />
     <Compile Include="Utilities\MaterialUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
+    <Compile Include="Utilities\ScoreUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />

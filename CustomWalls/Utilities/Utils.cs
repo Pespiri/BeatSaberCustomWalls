@@ -168,11 +168,11 @@ namespace CustomWalls.Utilities
         /// <summary>
         /// Check if a BSIPA plugin is enabled
         /// </summary>
-        public static bool IsPluginEnabled(string PluginName)
+        public static bool IsPluginEnabled(string pluginName)
         {
-            if (IsPluginPresent(PluginName))
+            if (IsPluginPresent(pluginName))
             {
-                PluginLoader.PluginInfo pluginInfo = PluginManager.GetPluginFromId(PluginName);
+                PluginLoader.PluginInfo pluginInfo = PluginManager.GetPluginFromId(pluginName);
                 if (pluginInfo?.Metadata != null)
                 {
                     return PluginManager.IsEnabled(pluginInfo.Metadata);
@@ -185,11 +185,11 @@ namespace CustomWalls.Utilities
         /// <summary>
         /// Check if a plugin exists
         /// </summary>
-        public static bool IsPluginPresent(string PluginName)
+        public static bool IsPluginPresent(string pluginName)
         {
             // Check in BSIPA
-            if (PluginManager.GetPlugin(PluginName) != null ||
-                PluginManager.GetPluginFromId(PluginName) != null)
+            if (PluginManager.GetPlugin(pluginName) != null ||
+                PluginManager.GetPluginFromId(pluginName) != null)
             {
                 return true;
             }
@@ -198,7 +198,7 @@ namespace CustomWalls.Utilities
             // Check in old IPA
             foreach (IPlugin plugin in PluginManager.Plugins)
             {
-                if (plugin.Name == PluginName)
+                if (plugin.Name == pluginName)
                 {
                     return true;
                 }

@@ -24,7 +24,7 @@ namespace CustomWalls.HarmonyPatches.Patches
                 {
                     Renderer mesh = __instance.gameObject.GetComponentInChildren<Renderer>();
                     MaterialUtils.ReplaceRenderer(mesh, customMaterial.MaterialRenderer);
-                    MaterialUtils.SetRendererColor(mesh, MaterialUtils.CurrentColorManager.GetObstacleEffectColor());
+                    MaterialUtils.SetMaterialsColor(mesh?.materials, MaterialUtils.CurrentColorManager.GetObstacleEffectColor());
                 }
 
                 if (!Configuration.EnableObstacleFrame)

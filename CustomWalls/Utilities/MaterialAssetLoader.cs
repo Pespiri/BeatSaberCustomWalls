@@ -14,7 +14,10 @@ namespace CustomWalls.Utilities
         public static IList<CustomMaterial> CustomMaterialObjects { get; private set; }
         public static IEnumerable<string> CustomMaterialFiles { get; private set; } = Enumerable.Empty<string>();
 
-        internal static void LoadCustomMaterials()
+        /// <summary>
+        /// Load all CustomMaterials
+        /// </summary>
+        internal static void Load()
         {
             if (!IsLoaded)
             {
@@ -22,10 +25,10 @@ namespace CustomWalls.Utilities
 
                 IEnumerable<string> materialFilter = new List<string> { "*.pixie", "*.wall", };
                 CustomMaterialFiles = Utils.GetFileNames(Plugin.PluginAssetPath, materialFilter, SearchOption.AllDirectories, true);
-                Logger.log.Debug($"{CustomMaterialFiles.Count()} wall(s) found.");
+                Logger.log.Debug($"{CustomMaterialFiles.Count()} external wall(s) found.");
 
                 CustomMaterialObjects = LoadCustomMaterials(CustomMaterialFiles);
-                Logger.log.Debug($"{CustomMaterialObjects.Count} wall(s) loaded.");
+                Logger.log.Debug($"{CustomMaterialObjects.Count} total wall(s) loaded.");
 
                 if (Configuration.CurrentlySelectedMaterial != null)
                 {
@@ -42,6 +45,34 @@ namespace CustomWalls.Utilities
 
                 IsLoaded = true;
             }
+        }
+
+        /// <summary>
+        /// Reload all CustomMaterials
+        /// </summary>
+        internal static void Reload()
+        {
+            Logger.log.Debug("Reloading the MaterialAssetLoader");
+            Clear();
+            Load();
+        }
+
+        /// <summary>
+        /// Clear all loaded CustomMaterials
+        /// </summary>
+        internal static void Clear()
+        {
+            int numberOfObjects = CustomMaterialObjects.Count;
+            for (int i = 0; i < numberOfObjects; i++)
+            {
+                CustomMaterialObjects[i].Destroy();
+                CustomMaterialObjects[i] = null;
+            }
+
+            IsLoaded = false;
+            SelectedMaterial = 0;
+            CustomMaterialObjects = new List<CustomMaterial>();
+            CustomMaterialFiles = Enumerable.Empty<string>();
         }
 
         private static IList<CustomMaterial> LoadCustomMaterials(IEnumerable<string> customMaterialFiles)

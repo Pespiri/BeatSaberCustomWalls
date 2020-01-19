@@ -64,7 +64,7 @@ namespace CustomWalls
         private void Load()
         {
             Configuration.Load();
-            MaterialAssetLoader.LoadCustomMaterials();
+            MaterialAssetLoader.Load();
             CustomMaterialsPatches.ApplyHarmonyPatches();
             SettingsUI.CreateMenu();
 
@@ -73,9 +73,10 @@ namespace CustomWalls
 
         private void Unload()
         {
-            CustomMaterialsPatches.RemoveHarmonyPatches();
             ScoreUtility.Cleanup();
+            CustomMaterialsPatches.RemoveHarmonyPatches();
             Configuration.Save();
+            MaterialAssetLoader.Clear();
         }
     }
 }
