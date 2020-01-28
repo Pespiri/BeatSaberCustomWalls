@@ -2,7 +2,7 @@
 {
     public class PluginConfig
     {
-        public bool RegenerateConfig = true;
+        public static PluginConfig Instance { get; set; }
 
         public string SelectedWallMaterial;
         public bool EnableObstacleFrame = true;

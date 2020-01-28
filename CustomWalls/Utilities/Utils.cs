@@ -172,10 +172,10 @@ namespace CustomWalls.Utilities
         {
             if (IsPluginPresent(pluginName))
             {
-                PluginLoader.PluginInfo pluginInfo = PluginManager.GetPluginFromId(pluginName);
-                if (pluginInfo?.Metadata != null)
+                PluginMetadata metadata = PluginManager.GetPluginFromId(pluginName);
+                if (metadata != null)
                 {
-                    return PluginManager.IsEnabled(pluginInfo.Metadata);
+                    return PluginManager.IsEnabled(metadata);
                 }
             }
 

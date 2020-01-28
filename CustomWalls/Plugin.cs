@@ -10,21 +10,22 @@ using IPA.Utilities;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
 
 namespace CustomWalls
 {
-    public class Plugin : IBeatSaberPlugin, IDisablablePlugin
+    [Plugin(RuntimeOptions.DynamicInit)]
+    public class Plugin
     {
         public static string PluginName => "CustomWalls";
         public static SemVer.Version PluginVersion { get; private set; } = new SemVer.Version("0.0.0");
-        public static string PluginAssetPath => Path.Combine(BeatSaber.InstallPath, "CustomWalls");
+        public static string PluginAssetPath => Path.Combine(UnityGame.InstallPath, "CustomWalls");
 
-        public void Init(IPALogger logger, [Config.Prefer("json")] IConfigProvider cfgProvider, PluginLoader.PluginMetadata metadata)
+        [Init]
+        public void Init(IPALogger logger, Config config, PluginMetadata metadata)
         {
             Logger.log = logger;
-            Configuration.Init(cfgProvider);
+            Configuration.Init(config);
 
             if (metadata?.Version != null)
             {
@@ -32,34 +33,28 @@ namespace CustomWalls
             }
         }
 
+        [OnEnable]
         public void OnEnable() => Load();
+        [OnDisable]
         public void OnDisable() => Unload();
+        [OnExit]
         public void OnApplicationQuit() => Unload();
 
-        public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
+        private void OnGameSceneLoaded()
         {
-            if (nextScene.name == "GameCore")
-            {
-                MaterialUtils.CurrentColorManager = Resources.FindObjectsOfTypeAll<ColorManager>().LastOrDefault();
+            MaterialUtils.CurrentColorManager = Resources.FindObjectsOfTypeAll<ColorManager>().LastOrDefault();
 
-                CustomMaterial customMaterial = MaterialAssetLoader.CustomMaterialObjects[MaterialAssetLoader.SelectedMaterial];
-                if (customMaterial.Descriptor.DisablesScore
-                    || Configuration.UserDisabledScores)
-                {
-                    ScoreUtility.DisableScoreSubmission("Material");
-                }
-                else if (ScoreUtility.ScoreIsBlocked)
-                {
-                    ScoreUtility.EnableScoreSubmission("Material");
-                }
+            CustomMaterial customMaterial = MaterialAssetLoader.CustomMaterialObjects[MaterialAssetLoader.SelectedMaterial];
+            if (customMaterial.Descriptor.DisablesScore
+                || Configuration.UserDisabledScores)
+            {
+                ScoreUtility.DisableScoreSubmission("Material");
+            }
+            else if (ScoreUtility.ScoreIsBlocked)
+            {
+                ScoreUtility.EnableScoreSubmission("Material");
             }
         }
-
-        public void OnApplicationStart() { }
-        public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode) { }
-        public void OnSceneUnloaded(Scene scene) { }
-        public void OnUpdate() { }
-        public void OnFixedUpdate() { }
 
         private void Load()
         {
@@ -67,6 +62,7 @@ namespace CustomWalls
             MaterialAssetLoader.Load();
             CustomMaterialsPatches.ApplyHarmonyPatches();
             SettingsUI.CreateMenu();
+            AddEvents();
 
             Logger.log.Info($"{PluginName} v.{PluginVersion} has started.");
         }
@@ -77,6 +73,18 @@ namespace CustomWalls
             CustomMaterialsPatches.RemoveHarmonyPatches();
             Configuration.Save();
             MaterialAssetLoader.Clear();
+            RemoveEvents();
+        }
+
+        private void AddEvents()
+        {
+            RemoveEvents();
+            BS_Utils.Utilities.BSEvents.gameSceneLoaded += OnGameSceneLoaded;
+        }
+
+        private void RemoveEvents()
+        {
+            BS_Utils.Utilities.BSEvents.gameSceneLoaded -= OnGameSceneLoaded;
         }
     }
 }
