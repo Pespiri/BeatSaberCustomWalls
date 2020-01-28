@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace CustomWalls.Settings.UI
 {
-    internal class MaterialListView : BSMLResourceViewController
+    internal class MaterialListViewController : BSMLResourceViewController
     {
         public override string ResourceName => "CustomWalls.Settings.UI.Views.materialList.bsml";
 

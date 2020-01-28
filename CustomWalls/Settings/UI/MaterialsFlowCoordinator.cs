@@ -1,24 +1,30 @@
 ﻿using BeatSaberMarkupLanguage;
 using HMUI;
-using IPA.Utilities;
 using System;
 
 namespace CustomWalls.Settings.UI
 {
     internal class MaterialsFlowCoordinator : FlowCoordinator
     {
-        private MaterialListView materialsListView;
+        private MaterialListViewController materialsListView;
         private MaterialPreviewViewController materialsPreviewView;
         private MaterialDetailsViewController materialsDescriptionView;
 
         public void Awake()
         {
-            if (materialsListView == null)
+            if (!materialsPreviewView)
             {
-                materialsListView = BeatSaberUI.CreateViewController<MaterialListView>();
                 materialsPreviewView = BeatSaberUI.CreateViewController<MaterialPreviewViewController>();
-                materialsDescriptionView = BeatSaberUI.CreateViewController<MaterialDetailsViewController>();
+            }
 
+            if (!materialsDescriptionView)
+            {
+                materialsDescriptionView = BeatSaberUI.CreateViewController<MaterialDetailsViewController>();
+            }
+
+            if (!materialsListView)
+            {
+                materialsListView = BeatSaberUI.CreateViewController<MaterialListViewController>();
                 materialsListView.customMaterialChanged += materialsDescriptionView.OnMaterialWasChanged;
             }
         }
@@ -43,8 +49,7 @@ namespace CustomWalls.Settings.UI
         protected override void BackButtonWasPressed(ViewController topViewController)
         {
             // Dismiss ourselves
-            MainFlowCoordinator mainFlow = BeatSaberUI.MainFlowCoordinator;
-            mainFlow.InvokePrivateMethod("DismissFlowCoordinator", this, null, false);
+            BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this, null, false);
         }
     }
 }
