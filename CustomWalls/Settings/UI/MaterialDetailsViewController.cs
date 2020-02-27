@@ -2,6 +2,7 @@
 using BeatSaberMarkupLanguage.ViewControllers;
 using CustomWalls.Data;
 using CustomWalls.Utilities;
+using HMUI;
 using TMPro;
 
 namespace CustomWalls.Settings.UI
