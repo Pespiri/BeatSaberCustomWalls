@@ -37,8 +37,6 @@ namespace CustomWalls
         public void OnEnable() => Load();
         [OnDisable]
         public void OnDisable() => Unload();
-        [OnExit]
-        public void OnApplicationQuit() => Unload();
 
         private void OnGameSceneLoaded()
         {
