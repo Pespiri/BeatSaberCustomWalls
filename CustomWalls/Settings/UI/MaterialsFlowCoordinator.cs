@@ -25,7 +25,16 @@ namespace CustomWalls.Settings.UI
             if (!materialsListView)
             {
                 materialsListView = BeatSaberUI.CreateViewController<MaterialListViewController>();
-                materialsListView.customMaterialChanged += materialsDescriptionView.OnMaterialWasChanged;
+
+                if (materialsDescriptionView)
+                {
+                    materialsListView.customMaterialChanged += materialsDescriptionView.OnMaterialWasChanged;
+                }
+
+                if (materialsPreviewView)
+                {
+                    materialsListView.customMaterialChanged += materialsPreviewView.OnMaterialWasChanged;
+                }
             }
         }
 
@@ -48,7 +57,6 @@ namespace CustomWalls.Settings.UI
 
         protected override void BackButtonWasPressed(ViewController topViewController)
         {
-            // Dismiss ourselves
             BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this, null, false);
         }
     }
