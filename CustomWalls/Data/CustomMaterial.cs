@@ -13,6 +13,7 @@ namespace CustomWalls.Data
         public MaterialDescriptor Descriptor { get; }
         public GameObject GameObject { get; }
         public Renderer MaterialRenderer { get; }
+        public string ErrorMessage { get; } = string.Empty;
 
         public CustomMaterial(string fileName)
         {
@@ -37,13 +38,14 @@ namespace CustomWalls.Data
                     {
                         MaterialName = "Invalid Wall (Delete it!)",
                         AuthorName = fileName,
-                        Description = $"File: '{fileName}'" +
+                        Icon = Utils.GetErrorIcon()
+                    };
+
+                    ErrorMessage = $"File: '{fileName}'" +
                                     "\n\nThis file failed to load." +
                                     "\n\nThis may have been caused by having duplicated files," +
                                     " another wall with the same name already exists or that the custom wall is simply just broken." +
-                                    "\n\nThe best thing is probably just to delete it!",
-                        Icon = Utils.GetErrorIcon()
-                    };
+                                    "\n\nThe best thing is probably just to delete it!";
 
                     FileName = "DefaultMaterials";
                 }
@@ -82,13 +84,14 @@ namespace CustomWalls.Data
                     {
                         MaterialName = "Internal Error (Report it!)",
                         AuthorName = $@"internalResource\{name}",
-                        Description = $@"File: 'internalResource\\{name}'" +
+                        Icon = Utils.GetErrorIcon()
+                    };
+
+                    ErrorMessage = $@"File: 'internalResource\\{name}'" +
                                     "\n\nAn internal asset has failed to load." +
                                     "\n\nThis shouldn't have happened and should be reported!" +
                                     " Remember to include the log related to this incident." +
-                                    "\n\nDiscord: Pespiri#5919",
-                        Icon = Utils.GetErrorIcon()
-                    };
+                                    "\n\nDiscord: Pespiri#5919";
 
                     FileName = "DefaultMaterials";
                 }

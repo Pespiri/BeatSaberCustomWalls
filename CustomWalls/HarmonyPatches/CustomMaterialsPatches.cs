@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System.Reflection;
 
 namespace CustomWalls.HarmonyPatches
@@ -8,7 +8,7 @@ namespace CustomWalls.HarmonyPatches
     /// </summary>
     public class CustomMaterialsPatches
     {
-        private static HarmonyInstance instance;
+        private static Harmony instance;
 
         public static bool IsPatched { get; private set; }
         public const string InstanceId = "com.pespiri.beatsaber.pixiedust";
@@ -19,7 +19,7 @@ namespace CustomWalls.HarmonyPatches
             {
                 if (instance == null)
                 {
-                    instance = HarmonyInstance.Create(InstanceId);
+                    instance = new Harmony(InstanceId);
                 }
 
                 instance.PatchAll(Assembly.GetExecutingAssembly());

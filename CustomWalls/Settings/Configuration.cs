@@ -1,44 +1,31 @@
 ﻿using CustomWalls.Settings.Utilities;
 using IPA.Config;
-using IPA.Utilities;
+using IPA.Config.Stores;
 
 namespace CustomWalls.Settings
 {
     public class Configuration
     {
-        private static Ref<PluginConfig> config;
-        private static IConfigProvider configProvider;
-
         public static string CurrentlySelectedMaterial { get; internal set; }
         public static bool EnableObstacleFrame { get; internal set; }
 
         public static bool UserDisabledScores { get; internal set; }
 
-        internal static void Init(IConfigProvider cfgProvider)
+        internal static void Init(Config config)
         {
-            configProvider = cfgProvider;
-            config = cfgProvider.MakeLink<PluginConfig>((p, v) =>
-            {
-                if (v.Value == null || v.Value.RegenerateConfig)
-                {
-                    p.Store(v.Value = new PluginConfig() { RegenerateConfig = false });
-                }
-                config = v;
-            });
+            PluginConfig.Instance = config.Generated<PluginConfig>();
         }
 
         internal static void Load()
         {
-            CurrentlySelectedMaterial = config.Value.SelectedWallMaterial;
-            EnableObstacleFrame = config.Value.EnableObstacleFrame;
+            CurrentlySelectedMaterial = PluginConfig.Instance.SelectedWallMaterial;
+            EnableObstacleFrame = PluginConfig.Instance.EnableObstacleFrame;
         }
 
         internal static void Save()
         {
-            config.Value.SelectedWallMaterial = CurrentlySelectedMaterial;
-            config.Value.EnableObstacleFrame = EnableObstacleFrame;
-
-            configProvider.Store(config.Value);
+            PluginConfig.Instance.SelectedWallMaterial = CurrentlySelectedMaterial;
+            PluginConfig.Instance.EnableObstacleFrame = EnableObstacleFrame;
         }
     }
 }
