@@ -67,11 +67,12 @@ namespace CustomWalls
 
         private void Unload()
         {
-            ScoreUtility.Cleanup();
+            RemoveEvents();
             CustomMaterialsPatches.RemoveHarmonyPatches();
+            ScoreUtility.Cleanup();
             Configuration.Save();
             MaterialAssetLoader.Clear();
-            RemoveEvents();
+            SettingsUI.RemoveMenu();
         }
 
         private void AddEvents()
