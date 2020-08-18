@@ -13,6 +13,7 @@ namespace CustomWalls.Data
         public MaterialDescriptor Descriptor { get; }
         public GameObject GameObject { get; }
         public Renderer MaterialRenderer { get; }
+        public MeshFilter MaterialMeshFilter { get; }
         public string ErrorMessage { get; } = string.Empty;
 
         public CustomMaterial(string fileName)
@@ -28,6 +29,7 @@ namespace CustomWalls.Data
                     GameObject = AssetBundle.LoadAsset<GameObject>("Assets/_CustomMaterial.prefab");
                     Descriptor = GameObject.GetComponent<MaterialDescriptor>();
                     MaterialRenderer = MaterialUtils.GetGameObjectRenderer(GameObject, "pixie");
+                    MaterialMeshFilter = MeshUtils.GetGameObjectMeshFilter(GameObject, "pixie");
                 }
                 catch (Exception ex)
                 {
@@ -74,6 +76,7 @@ namespace CustomWalls.Data
                     FileName = $@"internalResource\{name}";
                     Descriptor = GameObject.GetComponent<MaterialDescriptor>();
                     MaterialRenderer = MaterialUtils.GetGameObjectRenderer(GameObject, "pixie");
+                    MaterialMeshFilter = MeshUtils.GetGameObjectMeshFilter(GameObject, "pixie");
                 }
                 catch (Exception ex)
                 {

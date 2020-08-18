@@ -2,7 +2,7 @@
 CustomWalls allows you to customize the obstacle walls in Beat Saber
 
 ## Features
-* Replace the wall materials in Beat Saber
+* Replace the wall materials/mesh in Beat Saber
 * Disable the wall frame
 
 ## For developers

@@ -47,7 +47,6 @@ namespace CustomWalls.Utilities
         public static void ReplaceRenderer(Renderer target, Renderer donor)
         {
             target.material = donor.material;
-
             //int materialsLength = donor.materials.Length;
             //if (materialsLength > target.materials.Length)
             //{

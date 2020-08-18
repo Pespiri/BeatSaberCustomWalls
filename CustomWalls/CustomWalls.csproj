@@ -111,6 +111,7 @@
     <Compile Include="Settings\UI\SettingsUI.cs" />
     <Compile Include="Utilities\MaterialAssetLoader.cs" />
     <Compile Include="Utilities\MaterialUtils.cs" />
+    <Compile Include="Utilities\MeshUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="Utilities\ScoreUtility.cs" />
   </ItemGroup>

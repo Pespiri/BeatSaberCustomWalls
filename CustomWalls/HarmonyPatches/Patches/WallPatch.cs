@@ -23,8 +23,28 @@ namespace CustomWalls.HarmonyPatches.Patches
                 if (customMaterial.FileName != "DefaultMaterials")
                 {
                     Renderer mesh = __instance.gameObject.GetComponentInChildren<Renderer>();
-                    MaterialUtils.ReplaceRenderer(mesh, customMaterial.MaterialRenderer);
-                    MaterialUtils.SetMaterialsColor(mesh?.materials, MaterialUtils.CurrentColorManager.GetObstacleEffectColor());
+                    Color color = MaterialUtils.CurrentColorManager.GetObstacleEffectColor();
+                    if (customMaterial.Descriptor.Overlay)
+                    {
+                        GameObject overlay = MeshUtils.CreateOverlay(mesh, customMaterial.MaterialRenderer, customMaterial.Descriptor.OverlayOffset);
+                        MaterialUtils.SetMaterialsColor(overlay?.GetComponent<Renderer>().materials, color);
+                        if (customMaterial.Descriptor.ReplaceMesh) {
+                            MeshUtils.ReplaceMesh(overlay.GetComponent<MeshFilter>(), customMaterial.MaterialMeshFilter, customMaterial.Descriptor.MeshScaleMultiplier);
+                            if(!customMaterial.Descriptor.ReplaceOnlyOverlayMesh)
+                            {
+                                MeshUtils.ReplaceMesh(__instance.gameObject.GetComponentInChildren<MeshFilter>(), customMaterial.MaterialMeshFilter, customMaterial.Descriptor.MeshScaleMultiplier);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MaterialUtils.ReplaceRenderer(mesh, customMaterial.MaterialRenderer);
+                        MaterialUtils.SetMaterialsColor(mesh?.materials, color);
+                        if (customMaterial.Descriptor.ReplaceMesh)
+                        {
+                            MeshUtils.ReplaceMesh(__instance.gameObject.GetComponentInChildren<MeshFilter>(), customMaterial.MaterialMeshFilter, customMaterial.Descriptor.MeshScaleMultiplier);
+                        }
+                    }
                 }
 
                 if (!Configuration.EnableObstacleFrame)
