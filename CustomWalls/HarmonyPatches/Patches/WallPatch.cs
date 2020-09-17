@@ -28,9 +28,10 @@ namespace CustomWalls.HarmonyPatches.Patches
                     {
                         GameObject overlay = MeshUtils.CreateOverlay(mesh, customMaterial.MaterialRenderer, customMaterial.Descriptor.OverlayOffset);
                         MaterialUtils.SetMaterialsColor(overlay?.GetComponent<Renderer>().materials, color);
-                        if (customMaterial.Descriptor.ReplaceMesh) {
+                        if (customMaterial.Descriptor.ReplaceMesh)
+                        {
                             MeshUtils.ReplaceMesh(overlay.GetComponent<MeshFilter>(), customMaterial.MaterialMeshFilter, customMaterial.Descriptor.MeshScaleMultiplier);
-                            if(!customMaterial.Descriptor.ReplaceOnlyOverlayMesh)
+                            if (!customMaterial.Descriptor.ReplaceOnlyOverlayMesh)
                             {
                                 MeshUtils.ReplaceMesh(__instance.gameObject.GetComponentInChildren<MeshFilter>(), customMaterial.MaterialMeshFilter, customMaterial.Descriptor.MeshScaleMultiplier);
                             }

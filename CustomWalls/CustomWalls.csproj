@@ -113,7 +113,6 @@
     <Compile Include="Utilities\MaterialUtils.cs" />
     <Compile Include="Utilities\MeshUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
-    <Compile Include="Utilities\ScoreUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />

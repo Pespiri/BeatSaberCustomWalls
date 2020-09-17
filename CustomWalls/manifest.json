@@ -5,11 +5,12 @@
     "#![CustomWalls.Resources.description.md]",
     "Change the all the materials!"
   ],
-  "gameVersion": "1.11.0",
+  "gameVersion": "1.11.1",
   "id": "CustomWalls",
   "name": "CustomWalls",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "dependsOn": {
+    "BSIPA":  "4.0.5",
     "BeatSaberMarkupLanguage": "^1.1.0",
     "BS Utils": "^1.4.0"
   },
