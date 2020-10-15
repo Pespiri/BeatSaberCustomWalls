@@ -1,5 +1,6 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.MenuButtons;
+using HMUI;
 
 namespace CustomWalls.Settings.UI
 {
@@ -35,7 +36,7 @@ namespace CustomWalls.Settings.UI
                 materialsFlowCoordinator = BeatSaberUI.CreateFlowCoordinator<MaterialsFlowCoordinator>();
             }
 
-            BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(materialsFlowCoordinator, null, false, false);
+            BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(materialsFlowCoordinator);
         }
 
         private static void MaterialsMenuButtonPressed() => ShowMaterialsFlow();

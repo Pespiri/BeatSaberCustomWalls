@@ -38,13 +38,13 @@ namespace CustomWalls.Settings.UI
             }
         }
 
-        protected override void DidActivate(bool firstActivation, ActivationType activationType)
+        protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
             try
             {
                 if (firstActivation)
                 {
-                    title = "Custom Walls";
+                    SetTitle("Custom Walls", ViewController.AnimationType.In);
                     showBackButton = true;
                     ProvideInitialViewControllers(materialsListView, materialsDescriptionView, materialsPreviewView);
                 }
@@ -57,7 +57,7 @@ namespace CustomWalls.Settings.UI
 
         protected override void BackButtonWasPressed(ViewController topViewController)
         {
-            BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this, null, false);
+            BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this);
         }
     }
 }

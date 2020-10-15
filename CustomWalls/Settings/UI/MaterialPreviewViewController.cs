@@ -11,7 +11,7 @@ namespace CustomWalls.Settings.UI
         public override string ResourceName => "CustomWalls.Settings.UI.Views.materialPreview.bsml";
 
         [UIComponent("error-description")]
-        public TextPageScrollView errorDescription;
+        public TextPageScrollView errorDescription = null;
 
         public void OnMaterialWasChanged(CustomMaterial customMaterial)
         {

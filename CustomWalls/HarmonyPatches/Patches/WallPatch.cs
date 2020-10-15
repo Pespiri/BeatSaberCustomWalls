@@ -4,6 +4,7 @@ using CustomWalls.Settings;
 using CustomWalls.Utilities;
 using HarmonyLib;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace CustomWalls.HarmonyPatches.Patches
@@ -15,6 +16,7 @@ namespace CustomWalls.HarmonyPatches.Patches
     [HarmonyPatch("Init", MethodType.Normal)]
     internal class WallPatch
     {
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Harmony calls this")]
         private static void Prefix(ref ObstacleController __instance, StretchableObstacle ____stretchableObstacle)
         {
             try

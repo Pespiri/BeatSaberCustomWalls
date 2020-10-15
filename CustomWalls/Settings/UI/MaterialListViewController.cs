@@ -24,7 +24,8 @@ namespace CustomWalls.Settings.UI
         public Action<CustomMaterial> customMaterialChanged;
 
         [UIComponent("materialList")]
-        public CustomListTableData customListTableData;
+        public CustomListTableData customListTableData = null;
+
 
         [UIAction("materialSelect")]
         public void Select(TableView _, int row)
@@ -49,7 +50,10 @@ namespace CustomWalls.Settings.UI
             customListTableData.data.Clear();
             foreach (CustomMaterial material in MaterialAssetLoader.CustomMaterialObjects)
             {
-                CustomListTableData.CustomCellInfo customCellInfo = new CustomListTableData.CustomCellInfo(material.Descriptor.MaterialName, material.Descriptor.AuthorName, material.Descriptor.Icon);
+                Sprite sprite = material?.Descriptor?.Icon
+                    ? Sprite.Create(material.Descriptor.Icon, new Rect(Vector2.zero, new Vector2(material.Descriptor.Icon.width, material.Descriptor.Icon.height)), new Vector2(0.5f, 0.5f))
+                    : null;
+                CustomListTableData.CustomCellInfo customCellInfo = new CustomListTableData.CustomCellInfo(material.Descriptor.MaterialName, material.Descriptor.AuthorName, sprite);
                 customListTableData.data.Add(customCellInfo);
             }
 
@@ -60,9 +64,9 @@ namespace CustomWalls.Settings.UI
             customListTableData.tableView.SelectCellWithIdx(selectedMaterial);
         }
 
-        protected override void DidActivate(bool firstActivation, ActivationType type)
+        protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
-            base.DidActivate(firstActivation, type);
+            base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
 
             if (!colorManager)
             {
@@ -72,16 +76,16 @@ namespace CustomWalls.Settings.UI
             if (!preview)
             {
                 preview = new GameObject();
-                preview.transform.position = new Vector3(2.15f, 1.45f, 1.45f); // new Vector3(2.25f, 1.45f, 1.55f)
+                preview.transform.position = new Vector3(2.25f, 1.25f, 1.25f);
                 preview.transform.Rotate(0.0f, -30.0f, 0.0f);
             }
 
             Select(customListTableData.tableView, MaterialAssetLoader.SelectedMaterial);
         }
 
-        protected override void DidDeactivate(DeactivationType deactivationType)
+        protected override void DidDeactivate(bool removedFromHierarchy, bool screenSystemDisabling)
         {
-            base.DidDeactivate(deactivationType);
+            base.DidDeactivate(removedFromHierarchy, screenSystemDisabling);
             ClearPreview();
         }
 
@@ -120,8 +124,17 @@ namespace CustomWalls.Settings.UI
 
                 if (materialObject)
                 {
-                    materialObject.transform.localPosition = Vector3.zero;
-                    materialObject.transform.localScale = new Vector3(10, 37.5f, 75); // new Vector3(5, 25, 50)
+                    // Fix irregular model scales (in most cases)
+                    foreach (Transform child in materialObject.GetComponentsInChildren<Transform>(false))
+                    {
+                        if (child)
+                        {
+                            child.localScale = Vector3.one;
+                            child.localPosition = Vector3.zero;
+                        }
+                    }
+
+                    materialObject.transform.localScale = new Vector3(10f, 37.5f, 75f);
 
                     Renderer renderer = materialObject.gameObject?.GetComponentInChildren<Renderer>();
                     MaterialUtils.SetMaterialsColor(renderer?.materials, colorManager.GetObstacleEffectColor());
