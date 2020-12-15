@@ -23,7 +23,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -113,7 +112,6 @@
     <Compile Include="Utilities\MaterialUtils.cs" />
     <Compile Include="Utilities\MeshUtils.cs" />
     <Compile Include="Utilities\Utils.cs" />
-    <Compile Include="Utilities\ScoreUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />

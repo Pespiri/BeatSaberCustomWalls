@@ -4,6 +4,7 @@ using CustomWalls.Settings;
 using CustomWalls.Utilities;
 using HarmonyLib;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace CustomWalls.HarmonyPatches.Patches
@@ -15,6 +16,7 @@ namespace CustomWalls.HarmonyPatches.Patches
     [HarmonyPatch("Init", MethodType.Normal)]
     internal class WallPatch
     {
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Harmony calls this")]
         private static void Prefix(ref ObstacleController __instance, StretchableObstacle ____stretchableObstacle)
         {
             try
@@ -28,9 +30,10 @@ namespace CustomWalls.HarmonyPatches.Patches
                     {
                         GameObject overlay = MeshUtils.CreateOverlay(mesh, customMaterial.MaterialRenderer, customMaterial.Descriptor.OverlayOffset);
                         MaterialUtils.SetMaterialsColor(overlay?.GetComponent<Renderer>().materials, color);
-                        if (customMaterial.Descriptor.ReplaceMesh) {
+                        if (customMaterial.Descriptor.ReplaceMesh)
+                        {
                             MeshUtils.ReplaceMesh(overlay.GetComponent<MeshFilter>(), customMaterial.MaterialMeshFilter, customMaterial.Descriptor.MeshScaleMultiplier);
-                            if(!customMaterial.Descriptor.ReplaceOnlyOverlayMesh)
+                            if (!customMaterial.Descriptor.ReplaceOnlyOverlayMesh)
                             {
                                 MeshUtils.ReplaceMesh(__instance.gameObject.GetComponentInChildren<MeshFilter>(), customMaterial.MaterialMeshFilter, customMaterial.Descriptor.MeshScaleMultiplier);
                             }

@@ -1,6 +1,4 @@
-﻿using IPA.Loader;
-using IPA.Old;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -163,49 +161,6 @@ namespace CustomWalls.Utilities
             }
 
             return unescapedString;
-        }
-
-        /// <summary>
-        /// Check if a BSIPA plugin is enabled
-        /// </summary>
-        public static bool IsPluginEnabled(string pluginName)
-        {
-            if (IsPluginPresent(pluginName))
-            {
-                PluginMetadata metadata = PluginManager.GetPluginFromId(pluginName);
-                if (metadata != null)
-                {
-                    return PluginManager.IsEnabled(metadata);
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Check if a plugin exists
-        /// </summary>
-        public static bool IsPluginPresent(string pluginName)
-        {
-            // Check in BSIPA
-            if (PluginManager.GetPlugin(pluginName) != null ||
-                PluginManager.GetPluginFromId(pluginName) != null)
-            {
-                return true;
-            }
-
-#pragma warning disable CS0618 // IPA is obsolete
-            // Check in old IPA
-            foreach (IPlugin plugin in PluginManager.Plugins)
-            {
-                if (plugin.Name == pluginName)
-                {
-                    return true;
-                }
-            }
-#pragma warning restore CS0618 // IPA is obsolete
-
-            return false;
         }
 
         private static string FormatResourceName(Assembly assembly, string resourceName)

@@ -15,7 +15,7 @@ namespace CustomWalls.Settings.UI
         private readonly string scoreDisabledByUser = "Score Submission has been manually disabled";
 
         [UIComponent("material-description")]
-        public TextPageScrollView materialDescription;
+        public TextPageScrollView materialDescription = null;
 
         [UIValue("enable-obstacle-frame")]
         public bool EnableObstacleFrame
@@ -32,7 +32,7 @@ namespace CustomWalls.Settings.UI
         }
 
         [UIComponent("score-submission-info")]
-        public TextMeshProUGUI scoreSubmissionInfo;
+        public TextMeshProUGUI scoreSubmissionInfo = null;
 
         public void OnMaterialWasChanged(CustomMaterial customMaterial)
         {
@@ -47,7 +47,7 @@ namespace CustomWalls.Settings.UI
         }
 
         [UIAction("score-submission-manual-change")]
-        private void OnManualScoreSubmissionChange(bool state)
+        public void OnManualScoreSubmissionChange(bool state)
         {
             if (state)
             {

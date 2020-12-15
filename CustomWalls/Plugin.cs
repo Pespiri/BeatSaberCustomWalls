@@ -46,11 +46,8 @@ namespace CustomWalls
             if (customMaterial.Descriptor.DisablesScore
                 || Configuration.UserDisabledScores)
             {
-                ScoreUtility.DisableScoreSubmission("Material");
-            }
-            else if (ScoreUtility.ScoreIsBlocked)
-            {
-                ScoreUtility.EnableScoreSubmission("Material");
+                BS_Utils.Gameplay.ScoreSubmission.DisableSubmission(PluginName);
+                Logger.log.Info("ScoreSubmission has been disabled.");
             }
         }
 
@@ -69,7 +66,6 @@ namespace CustomWalls
         {
             RemoveEvents();
             CustomMaterialsPatches.RemoveHarmonyPatches();
-            ScoreUtility.Cleanup();
             Configuration.Save();
             MaterialAssetLoader.Clear();
             SettingsUI.RemoveMenu();
