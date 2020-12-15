@@ -17,7 +17,7 @@ namespace CustomWalls.HarmonyPatches.Patches
     internal class WallPatch
     {
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Harmony calls this")]
-        private static void Prefix(ref ObstacleController __instance, StretchableObstacle ____stretchableObstacle)
+        private static void Postfix(ref ObstacleController __instance, StretchableObstacle ____stretchableObstacle, ref SimpleColorSO ____color)
         {
             try
             {
@@ -25,7 +25,8 @@ namespace CustomWalls.HarmonyPatches.Patches
                 if (customMaterial.FileName != "DefaultMaterials")
                 {
                     Renderer mesh = __instance.gameObject.GetComponentInChildren<Renderer>();
-                    Color color = MaterialUtils.CurrentColorManager.GetObstacleEffectColor();
+                    Color color = ____color.color;
+
                     if (customMaterial.Descriptor.Overlay)
                     {
                         GameObject overlay = MeshUtils.CreateOverlay(mesh, customMaterial.MaterialRenderer, customMaterial.Descriptor.OverlayOffset);
