@@ -135,6 +135,11 @@ namespace CustomWalls.Settings.UI
                     }
 
                     materialObject.transform.localScale = new Vector3(10f, 37.5f, 75f);
+                    if (customMaterial.Descriptor.ReplaceMesh)
+                    {
+                        // Account for custom mesh scale being weird in previews
+                        materialObject.transform.localScale *= 0.025f;
+                    }
 
                     Renderer renderer = materialObject.gameObject?.GetComponentInChildren<Renderer>();
                     MaterialUtils.SetMaterialsColor(renderer?.materials, colorManager.GetObstacleEffectColor());
