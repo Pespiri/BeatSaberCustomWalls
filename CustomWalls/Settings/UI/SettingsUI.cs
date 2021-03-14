@@ -1,6 +1,5 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.MenuButtons;
-using HMUI;
 
 namespace CustomWalls.Settings.UI
 {

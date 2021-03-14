@@ -16,7 +16,7 @@ namespace CustomWalls.Settings.UI
 
         private bool isGeneratingPreview = false;
         private GameObject preview;
-        private ColorManager colorManager = null;
+        private ColorSchemesSettings currentColorScheme = null;
 
         // Objects
         private GameObject materialObject;
@@ -60,24 +60,20 @@ namespace CustomWalls.Settings.UI
             customListTableData.tableView.ReloadData();
             int selectedMaterial = MaterialAssetLoader.SelectedMaterial;
 
-            customListTableData.tableView.ScrollToCellWithIdx(selectedMaterial, TableViewScroller.ScrollPositionType.Beginning, false);
+            customListTableData.tableView.ScrollToCellWithIdx(selectedMaterial, TableView.ScrollPositionType.Beginning, false);
             customListTableData.tableView.SelectCellWithIdx(selectedMaterial);
         }
 
         protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
             base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
-
-            if (!colorManager)
-            {
-                colorManager = Resources.FindObjectsOfTypeAll<ColorManager>().LastOrDefault();
-            }
+            currentColorScheme = Resources.FindObjectsOfTypeAll<GameplaySetupViewController>().LastOrDefault().colorSchemesSettings;
 
             if (!preview)
             {
                 preview = new GameObject();
-                preview.transform.position = new Vector3(2.25f, 1.25f, 1.25f);
-                preview.transform.Rotate(0.0f, -30.0f, 0.0f);
+                preview.transform.position = new Vector3(3.30f, 1.25f, 1.70f);
+                preview.transform.Rotate(0.0f, -22.5f, 0.0f);
             }
 
             Select(customListTableData.tableView, MaterialAssetLoader.SelectedMaterial);
@@ -134,7 +130,7 @@ namespace CustomWalls.Settings.UI
                         }
                     }
 
-                    materialObject.transform.localScale = new Vector3(10f, 37.5f, 75f);
+                    materialObject.transform.localScale = new Vector3(15f, 50.0f, 100f);
                     if (customMaterial.Descriptor.ReplaceMesh)
                     {
                         // Account for custom mesh scale being weird in previews
@@ -142,7 +138,7 @@ namespace CustomWalls.Settings.UI
                     }
 
                     Renderer renderer = materialObject.gameObject?.GetComponentInChildren<Renderer>();
-                    MaterialUtils.SetMaterialsColor(renderer?.materials, colorManager.GetObstacleEffectColor());
+                    MaterialUtils.SetMaterialsColor(renderer?.materials, currentColorScheme.GetSelectedColorScheme().obstaclesColor);
                 }
             }
         }
@@ -165,8 +161,8 @@ namespace CustomWalls.Settings.UI
 
         private void ClearPreview()
         {
-            DestroyGameObject(ref preview);
             ClearObjects();
+            DestroyGameObject(ref preview);
         }
 
         private void ClearObjects()

@@ -7,7 +7,12 @@ namespace CustomWalls.Utilities
 {
     internal class MaterialUtils
     {
-        public static ColorManager CurrentColorManager { get; internal set; }
+        private static readonly System.Random mixStrength = new System.Random();
+
+        public static Renderer MixRenderers(Renderer original, Renderer custom)
+        {
+            return DateTime.Now.Month == 4 && DateTime.Now.Day == 1 ? mixStrength.Next(100) == 0 ? original : custom : custom;
+        }
 
         /// <summary>
         /// Find a specific renderer within a GameObject

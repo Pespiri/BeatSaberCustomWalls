@@ -8,8 +8,6 @@ using IPA.Config;
 using IPA.Loader;
 using IPA.Utilities;
 using System.IO;
-using System.Linq;
-using UnityEngine;
 using IPALogger = IPA.Logging.Logger;
 
 namespace CustomWalls
@@ -40,8 +38,6 @@ namespace CustomWalls
 
         private void OnGameSceneLoaded()
         {
-            MaterialUtils.CurrentColorManager = Resources.FindObjectsOfTypeAll<ColorManager>().LastOrDefault();
-
             CustomMaterial customMaterial = MaterialAssetLoader.CustomMaterialObjects[MaterialAssetLoader.SelectedMaterial];
             if (customMaterial.Descriptor.DisablesScore
                 || Configuration.UserDisabledScores)
