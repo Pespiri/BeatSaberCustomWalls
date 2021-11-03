@@ -30,7 +30,7 @@ public class CompileMaterialWindow : EditorWindow
             material.Icon = (Texture2D)EditorGUILayout.ObjectField("Cover Image", material.Icon, typeof(Texture2D), false);
 
             bool disableExportButton = false;
-            if (material.transform.Find("Pixie") == null
+            if (material.transform.Find("Wall") == null
                 || string.IsNullOrWhiteSpace(material.AuthorName)
                 || string.IsNullOrWhiteSpace(material.MaterialName))
             {
