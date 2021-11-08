@@ -17,7 +17,7 @@ public class CompileMaterialWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Pixie", EditorStyles.boldLabel);
+        GUILayout.Label("Wall", EditorStyles.boldLabel);
         GUILayout.Space(20);
 
         foreach (MaterialDescriptor material in materials)
@@ -30,7 +30,7 @@ public class CompileMaterialWindow : EditorWindow
             material.Icon = (Texture2D)EditorGUILayout.ObjectField("Cover Image", material.Icon, typeof(Texture2D), false);
 
             bool disableExportButton = false;
-            if (material.transform.Find("Wall") == null
+            if (material.transform.Find("Pixie") == null
                 || string.IsNullOrWhiteSpace(material.AuthorName)
                 || string.IsNullOrWhiteSpace(material.MaterialName))
             {
