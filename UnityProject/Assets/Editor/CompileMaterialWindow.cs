@@ -17,7 +17,7 @@ public class CompileMaterialWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Walls", EditorStyles.boldLabel);
+        GUILayout.Label("Wall", EditorStyles.boldLabel);
         GUILayout.Space(20);
 
         foreach (MaterialDescriptor material in materials)
@@ -44,7 +44,7 @@ public class CompileMaterialWindow : EditorWindow
                 GameObject materialObject = material.gameObject;
                 if (materialObject != null && material != null)
                 {
-                    string path = EditorUtility.SaveFilePanel("Save wall (pixie) file", "", material.MaterialName + ".pixie", "pixie");
+                    string path = EditorUtility.SaveFilePanel("Save wall file", "", material.MaterialName + ".wall", "wall");
 
                     if (!string.IsNullOrWhiteSpace(path))
                     {
