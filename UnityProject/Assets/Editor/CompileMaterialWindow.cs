@@ -17,7 +17,7 @@ public class CompileMaterialWindow : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Walls", EditorStyles.boldLabel);
+        GUILayout.Label("Pixie", EditorStyles.boldLabel);
         GUILayout.Space(20);
 
         foreach (MaterialDescriptor material in materials)
