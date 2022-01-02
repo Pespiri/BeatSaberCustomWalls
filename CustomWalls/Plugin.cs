@@ -3,6 +3,7 @@ using CustomWalls.HarmonyPatches;
 using CustomWalls.Settings;
 using CustomWalls.Settings.UI;
 using CustomWalls.Utilities;
+using Hive.Versioning;
 using IPA;
 using IPA.Config;
 using IPA.Loader;
@@ -16,7 +17,7 @@ namespace CustomWalls
     public class Plugin
     {
         public static string PluginName => "CustomWalls";
-        public static SemVer.Version PluginVersion { get; private set; } = new SemVer.Version("0.0.0");
+        public static Version PluginVersion { get; private set; } = new Version("0.0.0");
         public static string PluginAssetPath => Path.Combine(UnityGame.InstallPath, "CustomWalls");
 
         [Init]
@@ -25,9 +26,9 @@ namespace CustomWalls
             Logger.log = logger;
             Configuration.Init(config);
 
-            if (metadata?.Version != null)
+            if (metadata?.HVersion != null)
             {
-                PluginVersion = metadata.Version;
+                PluginVersion = metadata.HVersion;
             }
         }
 

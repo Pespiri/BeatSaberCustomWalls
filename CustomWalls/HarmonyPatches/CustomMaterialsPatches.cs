@@ -15,23 +15,22 @@ namespace CustomWalls.HarmonyPatches
 
         internal static void ApplyHarmonyPatches()
         {
-            if (!IsPatched)
-            {
-                if (instance == null)
-                {
-                    instance = new Harmony(InstanceId);
-                }
+            if (IsPatched) return;
 
-                instance.PatchAll(Assembly.GetExecutingAssembly());
-                IsPatched = true;
+            if (instance == null)
+            {
+                instance = new Harmony(InstanceId);
             }
+
+            instance.PatchAll(Assembly.GetExecutingAssembly());
+            IsPatched = true;
         }
 
         internal static void RemoveHarmonyPatches()
         {
             if (instance != null && IsPatched)
             {
-                instance.UnpatchAll(InstanceId);
+                instance.UnpatchSelf();
                 IsPatched = false;
             }
         }
